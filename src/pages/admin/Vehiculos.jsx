@@ -39,7 +39,9 @@ const Vehiculos = () => {
   return (
     <div className='flex h-full w-full flex-col items-center justify-start p-8'>
       <div className='flex flex-col w-full'>
-        <h2 className='text-3xl font-extrabold text-gray-900 text-center'>Módulo administrador de Vehículos</h2>
+        <h2 className='text-3xl font-extrabold text-gray-900'>
+          Página de administración de vehículos
+        </h2>
         <button
           onClick={() => {
             setMostrarTabla(!mostrarTabla);
@@ -127,7 +129,7 @@ const FilaVehiculo = ({ vehiculo, setEjecutarConsulta }) => {
   const [edit, setEdit] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [infoNuevoVehiculo, setInfoNuevoVehiculo] = useState({
-    id: vehiculo._id,
+    _id: vehiculo._id,
     name: vehiculo.name,
     brand: vehiculo.brand,
     model: vehiculo.model,
@@ -137,9 +139,9 @@ const FilaVehiculo = ({ vehiculo, setEjecutarConsulta }) => {
     //enviar la info al backend
     const options = {
       method: 'PATCH',
-      url: 'http://localhost:5000/vehiculos/editar',
+      url: `http://localhost:5000/vehiculos/${vehiculo._id}/`,
       headers: { 'Content-Type': 'application/json' },
-      data: { ...infoNuevoVehiculo, id: vehiculo._id },
+      data: { ...infoNuevoVehiculo },
     };
 
     await axios
@@ -307,7 +309,7 @@ const FormularioCreacionVehiculos = ({ setMostrarTabla, listaVehiculos, setVehic
       })
       .catch(function (error) {
         console.error(error);
-        toast.error('Error creando vehículo');
+        toast.error('Error creando un vehículo');
       });
 
     setMostrarTabla(true);
@@ -315,7 +317,7 @@ const FormularioCreacionVehiculos = ({ setMostrarTabla, listaVehiculos, setVehic
 
   return (
     <div className='flex flex-col items-center justify-center'>
-      <h2 className='text-2xl font-extrabold text-green-900'>Crear Vehículo</h2>
+      <h2 className='text-2xl font-extrabold text-gray-800'>Crear nuevo vehículo</h2>
       <form ref={form} onSubmit={submitForm} className='flex flex-col'>
         <label className='flex flex-col' htmlFor='nombre'>
           Nombre del vehículo
@@ -360,7 +362,7 @@ const FormularioCreacionVehiculos = ({ setMostrarTabla, listaVehiculos, setVehic
 
         <button
           type='submit'
-          className='col-span-2 bg-green-900 p-2 rounded-full shadow-md hover:bg-green-600 text-white'
+          className='col-span-2 bg-green-400 p-2 rounded-full shadow-md hover:bg-green-600 text-white'
         >
           Guardar vehiculo
         </button>
